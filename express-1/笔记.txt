@@ -1,0 +1,17 @@
+express  jquery
+
+下载
+	express
+
+
+读取静态资源
+app.use(express.static('./public'));
+
+//get
+
+
+路由
+
+
+模板 swig
+

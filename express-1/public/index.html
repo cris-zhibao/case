@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>{{title}}</title>
+</head>
+<body> 
+
+    {% if isLogin%}
+    <h2>你好{{isLogin}}</h2>
+    {%else%}
+    <h2>请登录</h2>
+    {%endif%}
+
+    <ul>
+        {% for item in arr %}
+        <li>
+            姓名：{{item.name}},
+            年龄：{{item.age}},
+        </li>
+        {%endfor%}
+    </ul>
+
+    <input type="text" id="inp">
+
+    <script>
+        inp.onblur=function(){
+            let ajax=new XMLHttpRequest;
+            ajax.open('POST','/user/login');
+            ajax.setRequestHeader('Content-Type',
+            'application/x-www-form-urlencoded');
+            ajax.send('val='+this.value);
+            ajax.onload=function(){
+                console.log(ajax.responseText);
+                location.reload();
+            }
+        }
+    </script>
+
+</body>
+</html>

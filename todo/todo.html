@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>todos</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+    <section class="todoapp">
+        <div>
+            <header class="header" >
+                <h1>todos</h1>
+                <input 
+                    class="new-todo" 
+                    placeholder="请输入内容" 
+                    v-model="val"
+                    @keyup.13="add"
+                >
+            </header>
+            <section class="main">
+                <input 
+                    class="toggle-all" 
+                    type="checkbox"
+                    :checked="all"
+                    @click="changeAll"
+                >
+                <ul class="todo-list">
+                    <li 
+                        :class="{completed:val.checked}" 
+                        v-for="(val,key) in changeList"
+                    >
+                        <div class="view">
+                            <input 
+                                class="toggle" 
+                                type="checkbox" 
+                                v-model="val.checked">
+                            <label>{{val.txt}}</label>
+                            <button 
+                                class="destroy"
+                                @click="dele(val.id)"
+                            ></button>
+                        </div>
+                        <input class="edit" value="多多对对对">
+                    </li>
+                </ul>
+            </section>
+            <footer class="footer">
+	            <span class="todo-count">
+	            	<strong id="num">{{num}}</strong>
+	            	<span>条未选中</span>
+                </span>
+                <ul class="filters">
+                    <li v-for="(val,key) in footers">
+                        <a 
+                            href="javascript:;" 
+                            :class="{selected:index==key}"
+                            @click="index=key"
+                        >{{val}}</a>
+                    </li>
+                    <!-- <li>
+                        <a href="#">已选中</a>
+                    </li>
+                    <li>
+                        <a href="#">未选中</a>
+                    </li> -->
+                </ul>
+            </footer>
+        </div>
+    </section>
+<script src="../vue.js"></script>
+<script>
+    /*
+        1.输入内容，敲回车创建li
+        2.勾选
+        3.全选
+        4.删除
+    */
+
+    new Vue({
+        el:'.todoapp',
+        data:{
+            list:[
+                {
+                    id:0,
+                    txt:'第一条数据',
+                    checked:false
+                }
+            ],
+            val:'',
+            footers:['全部','已选中','未选中'],
+            index:0
+        },
+        methods:{
+            add(){
+                this.list.unshift({
+                    id:+new Date,
+                    txt:this.val,
+                    checked:false
+                });
+                this.val = '';
+            },
+            changeAll(ev){
+                this.list.forEach(e=>e.checked = ev.target.checked);
+                // console.log(ev.target.checked)
+            },
+            dele(id){
+                this.list = this.list.filter(e=>e.id != id);
+            }
+        },
+        computed:{
+            all(){
+                return !!this.list.length && this.list.every(e=>e.checked)
+            },
+            num(){
+                return this.list.filter(e=>!e.checked).length;
+            },
+            changeList(){
+                console.log('变化了');
+                return this.list.filter(e=>{
+                    switch(this.index){
+                        case  0 :
+                            return e;
+                        case  1 :
+                            return e.checked;
+                        case  2 :
+                            return !e.checked
+                    }
+                })
+            }
+
+        }
+    })
+
+</script>
+</body>
+</html>

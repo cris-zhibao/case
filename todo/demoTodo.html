@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>todos</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+    <section class="todoapp">
+        <div>
+            <header class="header" >
+                <h1>todos</h1>
+                <input  class="new-todo"  placeholder="请输入内容">
+            </header>
+            <section class="main">
+                <input class="toggle-all" type="checkbox">
+                <ul class="todo-list">
+                    <li>
+                        <div class="view">
+                            <input class="toggle" type="checkbox">
+                            <label>3123</label>
+                            <button class="destroy"></button>
+                        </div>
+                        <input class="edit" value="多多对对对">
+                    </li>
+                </ul>
+            </section>
+            <footer class="footer">
+	            <span class="todo-count">
+	            	<strong id="num">0</strong>
+	            	<span>条未选中</span>
+                </span>
+                <ul class="filters">
+                    <li>
+                        <a href="#" >全部</a>
+                    </li>
+                    <li>
+                        <a href="#">已选中</a>
+                    </li>
+                    <li>
+                        <a href="#">未选中</a>
+                    </li>
+                </ul>
+            </footer>
+        </div>
+    </section>
+<script src="../vue.js"></script>
+<script>
+    /*
+        1.输入内容，敲回车创建li
+        2.勾选
+        3.全选
+        4.删除
+    */
+
+
+</script>
+</body>
+</html>

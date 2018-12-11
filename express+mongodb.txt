@@ -1,0 +1,170 @@
+技术框架
+	node
+	express 
+	mongodb 存放数据
+
+	使用中间件
+		bodyparser
+		cookieparser  **与cookie的区别 
+		swig
+		mongoose
+
+初始化项目	 npm init
+
+下载一系列模块  npm install  express...  --save
+
+创建项目目录结构
+
+	db 			 	数据库存储目录
+	models		 	数据库模型文件目录
+	node_modules 	node第三方模块目录
+	public			公共资源文件目录（css/img/js）
+	routers			路由文件目录
+	schemas			数据库结构文件（schema）目录
+	views			模板文件目录
+	app.js 			启动 入口文件
+	package.json	项目配置文件
+
+编写入口文件app.js
+
+	调用express  并开启服务和监听端口
+
+
+	使用app.get('/',(req,res,next)=>{
+
+	});
+
+	参数说明：
+		req = request对象 保存客户端发送的数据
+		res = response对象 保存服务端输出的方法 例如res.send
+		next 函数 用于执行下一个和当前路径匹配的函数
+
+
+*** swig 替换https://mozilla.github.io/nunjucks/?tdsourcetag=s_pcqq_aiomsg
+引入swig模板引擎  require
+	配置模板引擎
+		app.engine('html',swig.renderFile);
+		app.set('views','./views')
+		app.set('view engine','html')
+		swig.setDefaults({cache:false})
+
+
+设置分路由管理:
+	/       > main.js    前端请求处理
+
+	/api    > api.js	 api接口请求
+
+    /admin  > admin.js   后台请求处理    
+
+静态资源读取设置
+	
+	app.use('/public',express.static(__dirname+'/public'))
+
+	修改静态资源路径
+
+----------------------------------------------------
+数据库 存储服务端数据
+
+开启mongodb服务
+	
+	在cmd 找到mongodb路径 并 执行 mongod.exe --dbpath=db文件夹路径 --port=端口号
+
+引入mongoose模块
+
+	创建数据库连接：   
+		mongoose.connect('数据库路径名称',callback(err)) 
+
+		mongodb://协议 指向数据库路径
+
+
+设置数据库中表结构 在schemas文件夹中 创建users.js
+			引入 mongoose  调用  new mongoose.Schema({表结构}) 并导出实例
+
+设置数据库中表模型 在model文件夹中 创建User.js
+			引入 mongoose 和schema对象 
+			使用 mongoose.model('User',schema对象)方法 设置表模型并导出
+
+
+编写前端注册展示及发送请求部分
+	创建并完善routers文件夹下的api.js  编写register路由
+
+
+引入并使用body-parser中间件 解决post数据解析问题
+
+	通过req.body获取前端数据
+
+编写注册基本验证  
+
+	1 用户名为空
+	2 密码为空
+	3 输入密码不一致
+
+	4 用户名被占用  （数据库验证）使用 User.findOne
+
+	统一返回数据格式  *** 写入中间件当中、  写入到中间件中
+
+	依次进行判断
+
+编写登录功能
+	验证 账户和密码是否匹配 
+
+	登录成功跳转用户信息页 并将用户名称和id传递到前台
+
+使用cookie来验证用户是否登录
+
+	使用cookie 中间件
+
+	设置cookie
+	res.cookie(name,val);  ***不能传标点符号 
+
+
+
+	获取cookie
+	req.cookies.name   decodeURIComponent 
+
+通过swig模板 if语法实现判断用户是否登录
+
+修改登录成功后逻辑
+
+编辑退出功能
+	将cookie值设置为null 重新加载页面
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
