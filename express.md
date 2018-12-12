@@ -19,6 +19,8 @@ express
 静态文件托管
     app.use(express.static('./views'));
 
+分模块设置路由
+    express.Router();
 
 GET方式：
     app.get('/get',(req,res)=>{
@@ -35,4 +37,23 @@ POST方式：
     app.post('/post',urlencodedParser,(req,res)=>{
          console.log(req.body);
     });
+
+操作cookie
+cookie-parse
+    res.cookie(key,val);
+    req.cookies
+
+模板操作 nunjucks
+    配置模板
+
+//处理404
+app.use((req, res, next) => {
+    res.render('404.html',{
+        err:'页面丢了'
+    });
+    next();
+})
+
+注册、登录、退出
+
 
