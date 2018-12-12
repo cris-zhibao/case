@@ -52,22 +52,24 @@
 <script>
     let loginbox=document.querySelector('#loginbox');
     let aTypeBtn=document.querySelectorAll('.btnlist h3');
-
-    for(let i=0 ; i<aTypeBtn.length;i++){
-        aTypeBtn[i].onclick=function(){
-            for(let i=0 ; i<aTypeBtn.length;i++){
-                aTypeBtn[i].className='';
-            }
-            this.className="active";
-            if(i==0){
-                loginbox.className='registerbox';
-            }else if(i==1){
-                loginbox.className='loginbox';
-            }
-            
-        };
+    if(loginbox){
+        for(let i=0 ; i<aTypeBtn.length;i++){
+            aTypeBtn[i].onclick=function(){
+                for(let i=0 ; i<aTypeBtn.length;i++){
+                    aTypeBtn[i].className='';
+                }
+                this.className="active";
+                if(i==0){
+                    loginbox.className='registerbox';
+                }else if(i==1){
+                    loginbox.className='loginbox';
+                }
+                
+            };
+        }
     }
 
+    
     function ajax(
         {data={},type='get',url=null,success=()=>{}}
     ){
@@ -100,40 +102,42 @@
     let passInp=document.querySelector('#password');
     let regBtn=document.querySelector('.register');
     let loginBtn=document.querySelector('.login');
-    regBtn.onclick=function(){
-        ajax({
-            url:'/api/user/addUser',
-            type:'post',
-            data:{
-                name:userInp.value,
-                pass:passInp.value
-            },
-            success:function(res){
-                console.log(res);
-                let data =JSON.parse(res)
-                console.log(data);
-            }
-        })
-    }
-
-    loginBtn.onclick=function(){
-        ajax({
-            url:'/api/user/login',
-            type:'post',
-            data:{
-                name:userInp.value,
-                pass:passInp.value
-            },
-            success:function(res){
-                let data =JSON.parse(res)
-                console.log(data);
-                
-                //登录成功 重加载页面
-                if(!data.code){
-                    location.reload();
+    if(userInp){
+        regBtn.onclick=function(){
+            ajax({
+                url:'/api/user/addUser',
+                type:'post',
+                data:{
+                    name:userInp.value,
+                    pass:passInp.value
+                },
+                success:function(res){
+                    console.log(res);
+                    let data =JSON.parse(res)
+                    console.log(data);
                 }
-            }
-        })
+            })
+        }
+
+        loginBtn.onclick=function(){
+            ajax({
+                url:'/api/user/login',
+                type:'post',
+                data:{
+                    name:userInp.value,
+                    pass:passInp.value
+                },
+                success:function(res){
+                    let data =JSON.parse(res)
+                    console.log(data);
+                    
+                    //登录成功 重加载页面
+                    if(!data.code){
+                        location.reload();
+                    }
+                }
+            })
+        }
     }
     
 </script>
